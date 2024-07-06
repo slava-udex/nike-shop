@@ -21,6 +21,9 @@ const config = {
       fontFamily: {
         inter: "Inter, sans-serif",
       },
+      screens: {
+        lg: "960px",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

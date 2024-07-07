@@ -1,35 +1,9 @@
 import { Link } from "@remix-run/react";
 import { Heart, ShoppingBag } from "lucide-react";
 import nike from "~/assets/images/nike.png";
-import { Input } from "~/components/ui";
+import { clothesLinks } from "~/shared/data";
+import { Input } from "~/shared/ui";
 import { NavHeader } from "./NavHeader";
-
-const links = [
-  {
-    label: "New & Featured",
-    href: "/new",
-  },
-  {
-    label: "Men",
-    href: "/men",
-  },
-  {
-    label: "Women",
-    href: "/women",
-  },
-  {
-    label: "Kids",
-    href: "/kids",
-  },
-  {
-    label: "Sale",
-    href: "/sale",
-  },
-  {
-    label: "SNKRS",
-    href: "/snkrs",
-  },
-];
 
 export function Navbar() {
   return (
@@ -40,7 +14,7 @@ export function Navbar() {
           <img src={nike} alt="Nike" />
         </Link>
         <ul className="flex-grow flex gap-4 font-medium flex-nowrap text-nowrap">
-          {links.map((link) => (
+          {clothesLinks.map((link) => (
             <li key={link.href}>
               <Link to={link.href}>{link.label}</Link>
             </li>

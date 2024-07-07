@@ -1,34 +1,8 @@
 import { Link } from "@remix-run/react";
 import { Menu, Package, ShoppingBag, Store } from "lucide-react";
-import { Button, Sheet } from "~/components/ui/";
-import { SheetContent, SheetFooter, SheetTrigger } from "~/components/ui/sheet";
-
-const links = [
-  {
-    label: "New & Featured",
-    href: "/new",
-  },
-  {
-    label: "Men",
-    href: "/men",
-  },
-  {
-    label: "Women",
-    href: "/women",
-  },
-  {
-    label: "Kids",
-    href: "/kids",
-  },
-  {
-    label: "Sale",
-    href: "/sale",
-  },
-  {
-    label: "SNKRS",
-    href: "/snkrs",
-  },
-];
+import { clothesLinks } from "~/shared/data";
+import { Button, Sheet } from "~/shared/ui";
+import { SheetContent, SheetFooter, SheetTrigger } from "~/shared/ui/sheet";
 
 const footerLinks = [
   {
@@ -57,7 +31,7 @@ export function NavSheet() {
       <SheetContent>
         <div className="flex flex-col py-8 gap-16 h-full relative">
           <ul className="flex flex-col gap-4">
-            {links.map((link) => (
+            {clothesLinks.map((link) => (
               <li key={link.href}>
                 <Link to={link.href} className="text-xl text-slate-950 ">
                   {link.label}

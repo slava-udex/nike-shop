@@ -1,5 +1,5 @@
 import { type MetaFunction } from "@remix-run/node";
-import { Button } from "~/components/ui/button";
+import { Button } from "~/shared/ui/button";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="p-4">
+    <div className="h-screen p-4">
       <Button>Click me!</Button>
     </div>
   );

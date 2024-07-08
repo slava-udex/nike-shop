@@ -6,3 +6,6 @@ export { SneakerDetailsDialog } from "./SneakerDetailsDialog";
 export { SneakerImages } from "./SneakerImages";
 export { SneakerShowcase } from "./SneakerShowcase";
 export { SneakerSizes } from "./SneakerSizes";
+export { SneakerSizeTable } from "./SneakerSizeTable";
+export { SneakerSizeTips } from "./SneakerSizeTips";
+export { SneakerSizePageTemplate } from "./SneakerSizePageTemplate";

@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import React from "react";
-import { cn } from "~/lib/utils";
+import { cn, getSizeLink } from "~/lib/utils";
 import { ISneaker } from "~/shared/interfaces";
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
   setSelectedSize: (size: string) => void;
   sneaker: ISneaker;
 }
+
 export const SneakerSizes: React.FC<Props> = ({
   sneaker,
   selectedSize,
@@ -24,7 +25,7 @@ export const SneakerSizes: React.FC<Props> = ({
     <>
       <div className="flex justify-between">
         <p className="font-medium">Select Size</p>
-        <Link to="/sneakers/size-guide" className="text-[#757575]">
+        <Link to={getSizeLink(sneaker.category)} className="text-[#757575]">
           Size Guide
         </Link>
       </div>

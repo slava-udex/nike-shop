@@ -22,8 +22,10 @@ export default function Index() {
   console.log(sneakers);
 
   return (
-    <div className="h-screen p-4">
-      <SneakerCard sneaker={sneakers[0]} />
+    <div className="h-screen p-4 flex gap-8">
+      {sneakers.map((sneaker) => (
+        <SneakerCard key={sneaker.id} sneaker={sneaker} />
+      ))}
     </div>
   );
 }

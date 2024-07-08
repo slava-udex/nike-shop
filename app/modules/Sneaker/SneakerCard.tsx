@@ -19,7 +19,7 @@ export const SneakerCard: React.FC<Props> = ({ sneaker }) => {
         <p className="font-medium">${sneaker.price.toLocaleString()}</p>
       </div>
       <p>{sneaker.category}</p>
-      <p>{sneaker.colors.length} Colors</p>
+      <p>{sneaker.sizes.length} Colors</p>
     </Link>
   );
 };

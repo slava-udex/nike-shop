@@ -1,8 +1,13 @@
 import { Link } from "@remix-run/react";
 import { Menu, Package, ShoppingBag, Store } from "lucide-react";
 import { clothesLinks } from "~/shared/data";
-import { Button, Sheet } from "~/shared/ui";
-import { SheetContent, SheetFooter, SheetTrigger } from "~/shared/ui/sheet";
+import {
+  Button,
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetTrigger,
+} from "~/shared/ui";
 
 const footerLinks = [
   {

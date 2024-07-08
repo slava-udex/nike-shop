@@ -6,9 +6,11 @@ export interface ISneaker {
   thumbnail: string;
   images: string[];
   showcase: string[];
+  showcaseComments: string;
   category: string;
-  colors: string[];
   sizes: string[];
   price: number;
   sizesAvalaible: string[];
+  benefits: string;
+  productDetails: string;
 }

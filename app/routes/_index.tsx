@@ -19,7 +19,6 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const { sneakers } = useLoaderData<{ sneakers: ISneaker[] }>();
-  console.log(sneakers);
 
   return (
     <div className="h-screen p-4 flex gap-8">

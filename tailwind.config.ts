@@ -22,6 +22,7 @@ const config = {
         inter: "Inter, sans-serif",
       },
       screens: {
+        xs: "475px",
         lg: "960px",
       },
       keyframes: {

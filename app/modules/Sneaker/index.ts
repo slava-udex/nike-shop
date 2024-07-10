@@ -9,3 +9,4 @@ export { SneakerSizes } from "./SneakerSizes";
 export { SneakerSizeTable } from "./SneakerSizeTable";
 export { SneakerSizeTips } from "./SneakerSizeTips";
 export { SneakerSizePageTemplate } from "./SneakerSizePageTemplate";
+export { SneakerKidsMeasure } from "./SneakerKidsMeasure";

@@ -7,6 +7,7 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import { addToCart, addToWish } from "~/actions";
 import { pb } from "~/lib/pb";
 import { useToast } from "~/lib/use-toast";
 import {
@@ -16,7 +17,7 @@ import {
   SneakerShowcase,
   SneakerSizes,
 } from "~/modules";
-import { ICart, ISneaker } from "~/shared/interfaces/";
+import { ISneaker } from "~/shared/interfaces/";
 import { IUser } from "~/shared/interfaces/user";
 import { Button } from "~/shared/ui";
 
@@ -35,6 +36,7 @@ export default function SneakerDetailPage() {
   const { toast } = useToast();
 
   useEffect(() => {
+    console.log({ action });
     if (action?.title && action.description) {
       toast({
         title: action.title,
@@ -77,13 +79,20 @@ export default function SneakerDetailPage() {
               <Button
                 type="submit"
                 className="rounded-full my-4 w-full py-8 text-lg hover:opacity-70"
+                name="_action"
+                value="cart"
               >
                 Add to Bag
               </Button>
+              <Button
+                type="submit"
+                className="w-full my-4 rounded-full py-8 text-lg bg-white text-black border hover:border-black "
+                name="_action"
+                value="wishlist"
+              >
+                Favourite
+              </Button>
             </Form>
-            <Button className="w-full my-4 rounded-full py-8 text-lg bg-white text-black border hover:border-black ">
-              Favourite
-            </Button>
           </div>
           <div className="flex flex-col mt-8 leading-7 gap-8">
             {sneaker.description && <p>{sneaker.description}</p>}
@@ -98,51 +107,21 @@ export default function SneakerDetailPage() {
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const user = pb.authStore.model;
-  if (!user) return redirect("/sign-in");
-
   const formData = await request.formData();
   const sneakerId = formData.get("sneakerId");
   const size = formData.get("size");
+  const actionType = formData.get("_action");
 
-  if (!size)
-    return json({
-      title: "Something went wrong!",
-      description: "Please select a size",
-    });
+  const user = pb.authStore.model;
+  if (!user) return redirect("/sign-in");
 
-  try {
-    const query = `userId="${user.id}" && sneakerId="${sneakerId}"`;
-    // Search for an existing cart
-    const existingCart: ICart[] = await pb.collection("cart").getFullList({
-      filter: query,
-    });
-    // If item is already in cart, do nothing
-    if (existingCart.length > 0) {
-      if (existingCart[0].size !== Number(size)) {
-        await pb.collection("cart").update(existingCart[0].id, {
-          size,
-        });
-        return json({
-          title: "OK!",
-          description: "This sneaker is already in cart. Size updated.",
-        });
-      }
-      return json({
-        title: "OK!",
-        description: "This sneaker is already in cart.",
-      });
-    }
-    await pb.collection("cart").create({
-      sneakerId,
-      userId: user.id,
-      size,
-    });
-  } catch (error) {
-    console.log(JSON.stringify(error));
-    return json({ title: "Oops!", message: "Something went wrong" });
+  if (actionType === "cart") {
+    return addToCart(sneakerId as string, Number(size), user as IUser);
   }
 
-  // Add cart drawer
-  return json({ title: "Success!", message: "Sneaker added to cart" });
+  if (actionType === "wishlist") {
+    return addToWish(sneakerId as string, Number(size), user as IUser);
+  }
+
+  return null;
 };

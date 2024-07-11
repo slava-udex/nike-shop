@@ -44,12 +44,15 @@ export function NavSheet() {
               </li>
             ))}
           </ul>
-          <div className="flex flex-col">
-            <p className="text-[#8D8D8D] text-center">
-              Become a Nike Member for the best products, inspiration and
-              stories in sport.
-            </p>
-            <div className="flex justify-center gap-6 py-4">
+          <div className="flex flex-col text-[#8D8D8D] text-center">
+            <div>
+              <p>Become a Nike Member for the best products</p>
+              <p className="hidden sm:block">
+                , inspiration and stories in sport.
+              </p>
+            </div>
+
+            <div className="flex justify-center gap-6 py-4 ">
               <Link to="/sign-up">
                 <Button className="rounded-full hover:bg-slate-900 hover:text-slate-100">
                   Join Us

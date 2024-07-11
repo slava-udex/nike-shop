@@ -4,10 +4,9 @@ import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import nike from "~/assets/images/nike.png";
 import { Button, CheckBox, Heading, Input } from "~/shared/ui";
 // import { pb } from "~/lib/pb";
+import { pb } from "~/lib/pb";
 import { FormData, resolver } from "~/lib/schemas/sign-in";
 import { AuthForm, Errors } from "~/modules";
-import PocketBase from "pocketbase";
-import { pb } from "~/lib/pb";
 
 export default function SignIn() {
   const {
@@ -75,5 +74,5 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ errors: [err] });
   }
 
-  return redirect("/");
+  return redirect("/?success=true");
 };

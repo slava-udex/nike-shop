@@ -79,5 +79,5 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     console.log(JSON.stringify(error));
   }
 
-  return redirect("/");
+  return redirect("/?success=true");
 };

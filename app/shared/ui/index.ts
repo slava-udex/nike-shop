@@ -7,3 +7,4 @@ export * from "./accordion";
 export * from "./carousel";
 export * from "./dialog";
 export * from "./table";
+export * from "./toaster";

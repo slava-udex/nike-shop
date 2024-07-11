@@ -1,7 +1,14 @@
-import { LoaderFunctionArgs } from "@remix-run/node";
-import { json, redirect, useLoaderData } from "@remix-run/react";
-import { useState } from "react";
+import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  Form,
+  json,
+  redirect,
+  useActionData,
+  useLoaderData,
+} from "@remix-run/react";
+import { useEffect, useState } from "react";
 import { pb } from "~/lib/pb";
+import { useToast } from "~/lib/use-toast";
 import {
   SneakerDetailsAccordion,
   SneakerDetailsDialog,
@@ -9,7 +16,8 @@ import {
   SneakerShowcase,
   SneakerSizes,
 } from "~/modules";
-import { ISneaker } from "~/shared/interfaces/";
+import { ICart, ISneaker } from "~/shared/interfaces/";
+import { IUser } from "~/shared/interfaces/user";
 import { Button } from "~/shared/ui";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -21,8 +29,19 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export default function SneakerDetailPage() {
-  const { sneaker } = useLoaderData<{ sneaker: ISneaker }>();
+  const { sneaker } = useLoaderData<{ sneaker: ISneaker; user: IUser }>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const action = useActionData<{ title: string; description: string }>();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (action?.title && action.description) {
+      toast({
+        title: action.title,
+        description: action.description,
+      });
+    }
+  }, [action, toast]);
 
   return (
     <div className="flex flex-col min-h-screen px-16 py-24 overflow-hidden gap-8  ">
@@ -48,9 +67,20 @@ export default function SneakerDetailPage() {
               setSelectedSize={setSelectedSize}
               sneaker={sneaker}
             />
-            <Button className="rounded-full my-4 w-full py-8 text-lg hover:opacity-70">
-              Add to Bag
-            </Button>
+            <Form method="post">
+              <input type="hidden" value={sneaker.id} name="sneakerId" />
+              <input
+                type="hidden"
+                value={selectedSize || undefined}
+                name="size"
+              />
+              <Button
+                type="submit"
+                className="rounded-full my-4 w-full py-8 text-lg hover:opacity-70"
+              >
+                Add to Bag
+              </Button>
+            </Form>
             <Button className="w-full my-4 rounded-full py-8 text-lg bg-white text-black border hover:border-black ">
               Favourite
             </Button>
@@ -66,3 +96,53 @@ export default function SneakerDetailPage() {
     </div>
   );
 }
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const user = pb.authStore.model;
+  if (!user) return redirect("/sign-in");
+
+  const formData = await request.formData();
+  const sneakerId = formData.get("sneakerId");
+  const size = formData.get("size");
+
+  if (!size)
+    return json({
+      title: "Something went wrong!",
+      description: "Please select a size",
+    });
+
+  try {
+    const query = `userId="${user.id}" && sneakerId="${sneakerId}"`;
+    // Search for an existing cart
+    const existingCart: ICart[] = await pb.collection("cart").getFullList({
+      filter: query,
+    });
+    // If item is already in cart, do nothing
+    if (existingCart.length > 0) {
+      if (existingCart[0].size !== Number(size)) {
+        await pb.collection("cart").update(existingCart[0].id, {
+          size,
+        });
+        return json({
+          title: "OK!",
+          description: "This sneaker is already in cart. Size updated.",
+        });
+      }
+      return json({
+        title: "OK!",
+        description: "This sneaker is already in cart.",
+      });
+    }
+    await pb.collection("cart").create({
+      sneakerId,
+      userId: user.id,
+      size,
+    });
+  } catch (error) {
+    console.log(JSON.stringify(error));
+    return json({ title: "Oops!", message: "Something went wrong" });
+  }
+
+  // Add cart drawer
+  return json({ title: "Success!", message: "Sneaker added to cart" });
+};

@@ -6,6 +6,7 @@ export const getRecommendations = async (
   sneakers: ISneaker[]
 ): Promise<ISneaker[]> => {
   const mostPopularCategory = getMostPopularCategory(sneakers);
+  console.log(mostPopularCategory);
 
   if (!mostPopularCategory) {
     return [];
@@ -13,9 +14,11 @@ export const getRecommendations = async (
 
   try {
     const idsToExclude = sneakers.map((sneaker) => sneaker.id);
+
     const products: ISneaker[] = await pb.collection("sneakers").getFullList({
       filter: `category="${mostPopularCategory}"`,
     });
+
     const filteredProducts = products.filter(
       (product) => !idsToExclude.includes(product.id)
     );

@@ -35,7 +35,7 @@ export default function Index() {
   }, [toast]);
 
   return (
-    <div className="h-screen p-4 flex gap-8">
+    <div className="h-screen p-4 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {sneakers.map((sneaker) => (
         <SneakerCard key={sneaker.id} sneaker={sneaker} />
       ))}

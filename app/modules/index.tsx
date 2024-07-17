@@ -3,3 +3,4 @@ export { Errors } from "./Errors";
 export { Navigation } from "./Navigation";
 export { Footer } from "./Footer";
 export * from "./Sneaker";
+export * from "./Global";

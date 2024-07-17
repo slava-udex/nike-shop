@@ -1,6 +1,7 @@
 import React from "react";
 import { ISneaker } from "~/shared/interfaces";
 import { SneakerCard } from "../Sneaker";
+import { SneakersCarousel } from "./SneakersCarousel";
 
 interface Props {
   recommendations: ISneaker[];
@@ -12,13 +13,9 @@ export const Recommendations: React.FC<Props> = ({ recommendations }) => {
   }
 
   return (
-    <div className="flex flex-col max-w-[1200px] mx-auto px-4">
+    <div className="flex flex-col max-w-[1200px] px-4">
       <h4 className="font-medium text-xl">You might also like</h4>
-      <div className="grid grid-cols-3">
-        {recommendations.map((product) => (
-          <SneakerCard sneaker={product} />
-        ))}
-      </div>
+      <SneakersCarousel sneakers={recommendations} />
     </div>
   );
 };

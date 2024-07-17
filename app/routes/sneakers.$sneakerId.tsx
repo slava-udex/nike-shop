@@ -8,6 +8,7 @@ import {
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { addToCart, addToWish } from "~/actions";
+import { getRecommendations } from "~/actions/getRecommendations";
 import { pb } from "~/lib/pb";
 import { useToast } from "~/lib/use-toast";
 import {
@@ -17,6 +18,7 @@ import {
   SneakerShowcase,
   SneakerSizes,
 } from "~/modules";
+import { Recommendations } from "~/modules/Cart";
 import { ISneaker } from "~/shared/interfaces/";
 import { IUser } from "~/shared/interfaces/user";
 import { Button } from "~/shared/ui";
@@ -25,12 +27,17 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const { sneakerId } = params;
   if (!sneakerId) return redirect("/");
 
-  const sneaker = await pb.collection("sneakers").getOne(sneakerId);
-  return json({ sneaker });
+  const sneaker: ISneaker = await pb.collection("sneakers").getOne(sneakerId);
+  const recommendations = await getRecommendations([sneaker]);
+
+  return json({ sneaker, recommendations });
 };
 
 export default function SneakerDetailPage() {
-  const { sneaker } = useLoaderData<{ sneaker: ISneaker; user: IUser }>();
+  const { sneaker, recommendations } = useLoaderData<{
+    sneaker: ISneaker;
+    recommendations: ISneaker[];
+  }>();
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const action = useActionData<{ title: string; description: string }>();
   const { toast } = useToast();
@@ -102,6 +109,7 @@ export default function SneakerDetailPage() {
         </div>
       </div>
       <SneakerShowcase sneaker={sneaker} />
+      <Recommendations recommendations={recommendations} />
     </div>
   );
 }

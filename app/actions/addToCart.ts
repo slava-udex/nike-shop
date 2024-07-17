@@ -42,9 +42,9 @@ export const addToCart = async (
     });
   } catch (error) {
     console.log(JSON.stringify(error));
-    return json({ title: "Oops!", message: "Something went wrong" });
+    return json({ title: "Oops!", description: "Something went wrong" });
   }
 
   // Add cart drawer
-  return json({ title: "Success!", message: "Sneaker added to cart" });
+  return json({ title: "Success!", description: "Sneaker added to cart" });
 };

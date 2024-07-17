@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import React from "react";
-import { cn, getSizeLink } from "~/lib/utils";
+import { cn, fromStringToArray, getSizeLink } from "~/lib/utils";
 import { ISneaker } from "~/shared/interfaces";
 
 interface Props {
@@ -14,6 +14,7 @@ export const SneakerSizes: React.FC<Props> = ({
   selectedSize,
   setSelectedSize,
 }) => {
+  const sizes = fromStringToArray(sneaker.sizes);
   const onSizeClick = (size: string) => {
     if (!sneaker.sizesAvalaible.includes(size)) {
       return;
@@ -30,7 +31,7 @@ export const SneakerSizes: React.FC<Props> = ({
         </Link>
       </div>
       <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-3 gap-2">
-        {sneaker.sizes.map((size) => (
+        {sizes.map((size) => (
           <div
             key={size}
             className={cn(

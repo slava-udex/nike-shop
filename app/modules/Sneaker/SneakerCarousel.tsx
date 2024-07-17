@@ -19,7 +19,7 @@ export const SneakerCarousel: React.FC<Props> = ({ sneaker }) => {
         {sneaker.images.map((image) => (
           <CarouselItem key={image} className="basis-[100%]">
             <img
-              src={`http://localhost:8090/api/files/${sneaker.collectionId}/${sneaker.id}/${image}`}
+              src={`http://ivs-nikestore-pb.apps.aiweb.cloud/api/files/${sneaker.collectionId}/${sneaker.id}/${image}`}
               className="w-full"
             />
           </CarouselItem>

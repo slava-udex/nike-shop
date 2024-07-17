@@ -26,7 +26,7 @@ export const SneakerDetailsDialog: React.FC<Props> = ({ sneaker }) => {
         <DialogHeader>
           <div className="flex items-center gap-4 ">
             <img
-              src={`http://localhost:8090/api/files/${sneaker.collectionId}/${sneaker.id}/${sneaker.thumbnail}`}
+              src={`http://ivs-nikestore-pb.apps.aiweb.cloud/api/files/${sneaker.collectionId}/${sneaker.id}/${sneaker.thumbnail}`}
               alt={`${sneaker.title}`}
               className="w-20 h-20 object-cover"
             />

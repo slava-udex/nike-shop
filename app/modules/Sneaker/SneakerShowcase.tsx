@@ -16,7 +16,7 @@ export const SneakerShowcase: React.FC<Props> = ({ sneaker }) => {
             {showcaseComments[index]}
           </p>
           <img
-            src={`http://localhost:8090/api/files/${sneaker.collectionId}/${sneaker.id}/${image}`}
+            src={`http://ivs-nikestore-pb.apps.aiweb.cloud/api/files/${sneaker.collectionId}/${sneaker.id}/${image}`}
             className="w-full object-cover"
           />
         </div>

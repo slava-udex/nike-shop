@@ -5,3 +5,4 @@ export type { ISizeChart } from "./sizeChart";
 export type { IUser } from "./user";
 export type { ICart } from "./cart";
 export type { IWish } from "./wish";
+export type { ICollection } from "./collection";

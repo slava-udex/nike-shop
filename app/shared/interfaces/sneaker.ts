@@ -8,9 +8,9 @@ export interface ISneaker {
   showcase: string[];
   showcaseComments: string;
   category: string;
-  sizes: string[];
+  sizes: string;
   price: number;
-  sizesAvalaible: string[];
+  sizesAvalaible: string;
   benefits: string;
   productDetails: string;
 }

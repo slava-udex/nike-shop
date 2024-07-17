@@ -16,7 +16,7 @@ export const SneakerImages: React.FC<Props> = ({ sneaker }) => {
         {sneaker.images.map((image) => (
           <img
             key={image}
-            src={`http://localhost:8090/api/files/${sneaker.collectionId}/${sneaker.id}/${image}`}
+            src={`http://ivs-nikestore-pb.apps.aiweb.cloud/api/files/${sneaker.collectionId}/${sneaker.id}/${image}`}
             className="max-w-[524px] w-full object-cover"
           />
         ))}

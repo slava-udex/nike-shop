@@ -10,7 +10,7 @@ export const SneakerCard: React.FC<Props> = ({ sneaker }) => {
   return (
     <Link to={link} className="flex flex-col max-w-96">
       <img
-        src={`http://localhost:8090/api/files/${sneaker.collectionId}/${sneaker.id}/${sneaker.thumbnail}`}
+        src={`http://ivs-nikestore-pb.apps.aiweb.cloud/api/files/${sneaker.collectionId}/${sneaker.id}/${sneaker.thumbnail}`}
         alt={sneaker.title}
         className="object-cover max-w-96 max-h-96 py-4"
       />

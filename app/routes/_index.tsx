@@ -5,6 +5,7 @@ import { pb } from "~/lib/pb";
 import { useToast } from "~/lib/use-toast";
 import { SneakerCard } from "~/modules";
 import { ISneaker } from "~/shared/interfaces/sneaker";
+import { SneakerGrid } from "~/shared/ui";
 
 export const meta: MetaFunction = () => {
   return [
@@ -34,11 +35,5 @@ export default function Index() {
     }
   }, [toast]);
 
-  return (
-    <div className="h-screen p-4 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-      {sneakers.map((sneaker) => (
-        <SneakerCard key={sneaker.id} sneaker={sneaker} />
-      ))}
-    </div>
-  );
+  return <SneakerGrid sneakers={sneakers} />;
 }

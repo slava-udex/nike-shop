@@ -1,12 +1,11 @@
 import { LoaderFunction, type MetaFunction } from "@remix-run/node";
 import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import { getPaginatedSneakers } from "~/lib/pagination";
+import { getPaginatedSneakers } from "~/lib/getPaginatedSneakers";
 import { useToast } from "~/lib/use-toast";
+import { PaginatedSneakerGrid } from "~/modules/Sneaker";
 import { ISneakersResponse } from "~/shared/interfaces";
 import { ISneaker } from "~/shared/interfaces/sneaker";
-import { SneakerGrid } from "~/shared/ui";
-import { InfiniteScroller } from "~/shared/ui/infinite-scroller";
 
 export const meta: MetaFunction = () => {
   return [
@@ -36,27 +35,14 @@ export default function Index() {
         description: "Successfully logged in.",
       });
     }
-
-    if (fetcher.state === "loading" || !fetcher.data) {
-      return;
-    }
-
-    const newSneakers = fetcher.data.paginatedSneakers.items;
-
-    setSneakers((prevSneakers) => [...prevSneakers, ...newSneakers]);
-  }, [fetcher.data, fetcher.state, isSuccess, toast, setSneakers]);
-
-  const loadNext = () => {
-    const page = fetcher.data
-      ? fetcher.data.paginatedSneakers.page + 1
-      : initialSneakers.page + 1;
-    const query = `?index&page=${page}`;
-    fetcher.load(query); // this call will trigger the loader with a new query
-  };
+  }, [isSuccess, toast]);
 
   return (
-    <InfiniteScroller loadNext={loadNext} loading={fetcher.state === "loading"}>
-      <SneakerGrid sneakers={sneakers} />;
-    </InfiniteScroller>
+    <PaginatedSneakerGrid
+      initialSneakers={initialSneakers}
+      sneakers={sneakers}
+      setSneakers={setSneakers}
+      fetcher={fetcher}
+    />
   );
 }

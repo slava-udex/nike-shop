@@ -1,5 +1,5 @@
 import { IPaginated, ISneaker } from "~/shared/interfaces";
-import { pb } from "../pb";
+import { pb } from "./pb";
 import { json } from "@remix-run/react";
 
 export const getPaginatedSneakers = async (
@@ -11,7 +11,9 @@ export const getPaginatedSneakers = async (
 
   const paginatedSneakers: IPaginated<ISneaker> = await pb
     .collection("sneakers")
-    .getList(+page, 2);
+    .getList(+page, 2, {
+      filter: filter || "",
+    });
 
   console.log(paginatedSneakers);
 

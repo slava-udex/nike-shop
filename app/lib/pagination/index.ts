@@ -1,1 +1,0 @@
-export { getPaginatedSneakers } from "./getPaginatedSneakers";

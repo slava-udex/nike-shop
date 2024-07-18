@@ -1,0 +1,1 @@
+export { getPaginatedSneakers } from "./getPaginatedSneakers";

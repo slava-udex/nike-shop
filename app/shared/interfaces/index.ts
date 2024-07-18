@@ -6,3 +6,5 @@ export type { IUser } from "./user";
 export type { ICart } from "./cart";
 export type { IWish } from "./wish";
 export type { ICollection } from "./collection";
+export type { IPaginated } from "./paginated";
+export type { ISneakersResponse } from "./sneakersResponse";

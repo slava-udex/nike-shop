@@ -10,7 +10,9 @@ export function NavMenu() {
         <img src={nike} alt="Nike" />
       </Link>
       <div className="flex gap-4 items-center ">
-        <Search className="cursor-pointer" />
+        <Link to="/search">
+          <Search />
+        </Link>
         <Link to="/account">
           <User />
         </Link>

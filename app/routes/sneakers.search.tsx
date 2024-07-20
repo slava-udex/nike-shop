@@ -7,22 +7,19 @@ import {
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { getRecommendationsByCategory } from "~/actions";
-import { getRecommendations } from "~/actions/getRecommendations";
 import { getPaginatedSneakers } from "~/lib/getPaginatedSneakers";
 import { PaginatedSneakerGrid } from "~/modules";
 import { Recommendations } from "~/modules/Cart";
 import { ISneaker, ISneakersResponse } from "~/shared/interfaces";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  console.log({ url: request.url });
-
   const { searchParams } = new URL(request.url);
 
   const query = searchParams.get("q");
 
-  // if (!query) {
-  //   return redirect("/");
-  // }
+  if (!query) {
+    return redirect("/");
+  }
 
   const filter = `title~"${query}" || category~"${query}"`;
 
@@ -41,6 +38,7 @@ export default function SneakersSearch() {
   const [sneakers, setSneakers] = useState<ISneaker[]>(initialSneakers.items);
   const fetcher = useFetcher<ISneakersResponse>();
   const searchParams = useSearchParams()[0];
+  const query = searchParams.get("q") || "";
 
   useEffect(() => {
     setSneakers(initialSneakers.items);
@@ -51,7 +49,7 @@ export default function SneakersSearch() {
       <div className="min-h-screen flex flex-col justify-center items-center py-12 gap-36">
         <div className="space-y-4">
           <h1 className="text-3xl sm:text-5xl text-center font-medium">
-            We could not find anything for "{searchParams.get("q")}"
+            We could not find anything for "{query}"
           </h1>
           <p className="text-xl text-center">
             These popular items might interest you
@@ -63,12 +61,15 @@ export default function SneakersSearch() {
   }
 
   return (
-    <PaginatedSneakerGrid
-      initialSneakers={initialSneakers}
-      sneakers={sneakers}
-      setSneakers={setSneakers}
-      fetcher={fetcher}
-      route={`sneakers/search&q=${searchParams.get("q")}`}
-    />
+    <div>
+      <h1 className="text-3xl font-bold p-4">Results for "{query}"</h1>
+      <PaginatedSneakerGrid
+        initialSneakers={initialSneakers}
+        sneakers={sneakers}
+        setSneakers={setSneakers}
+        fetcher={fetcher}
+        route={`sneakers/search&q=${query}`}
+      />
+    </div>
   );
 }

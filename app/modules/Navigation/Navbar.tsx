@@ -1,12 +1,13 @@
-import { Link } from "@remix-run/react";
+import { Link, useLocation } from "@remix-run/react";
 import { Heart, ShoppingBag } from "lucide-react";
 import nike from "~/assets/images/nike.png";
 import { clothesLinks } from "~/shared/data";
-import { Input } from "~/shared/ui";
+import { NavSearchInput } from "../Search";
 import { NavHeader } from "./NavHeader";
-import { SneakerSearchInput } from "../Sneaker";
 
 export function Navbar() {
+  const { pathname } = useLocation();
+
   return (
     <div className="flex flex-col w-full ">
       <NavHeader />
@@ -22,7 +23,7 @@ export function Navbar() {
           ))}
         </ul>
         <div className="flex items-center gap-6">
-          <SneakerSearchInput />
+          {pathname !== "/search" && <NavSearchInput />}
           <Link to="/wishlist">
             <Heart className="cursor-pointer w-6 h-6" />
           </Link>

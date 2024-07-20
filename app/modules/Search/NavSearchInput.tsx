@@ -3,7 +3,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { formatQuery } from "~/lib/formatQuery";
 import { Input } from "~/shared/ui";
 
-export const SneakerSearchInput = () => {
+export const NavSearchInput = () => {
   const searchParams = useSearchParams()[0];
   const query = searchParams.get("q") || "";
 

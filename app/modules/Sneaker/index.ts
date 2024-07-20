@@ -11,3 +11,4 @@ export { SneakerSizeTips } from "./SneakerSizeTips";
 export { SneakerSizePageTemplate } from "./SneakerSizePageTemplate";
 export { SneakerKidsMeasure } from "./SneakerKidsMeasure";
 export { PaginatedSneakerGrid } from "./PaginatedSneakerGrid";
+export { SneakerSearchInput } from "./SneakerSearch";

@@ -4,6 +4,7 @@ import nike from "~/assets/images/nike.png";
 import { clothesLinks } from "~/shared/data";
 import { Input } from "~/shared/ui";
 import { NavHeader } from "./NavHeader";
+import { SneakerSearchInput } from "../Sneaker";
 
 export function Navbar() {
   return (
@@ -21,7 +22,7 @@ export function Navbar() {
           ))}
         </ul>
         <div className="flex items-center gap-6">
-          <Input placeholder="Search.." />
+          <SneakerSearchInput />
           <Link to="/wishlist">
             <Heart className="cursor-pointer w-6 h-6" />
           </Link>

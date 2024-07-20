@@ -11,11 +11,9 @@ export const getPaginatedSneakers = async (
 
   const paginatedSneakers: IPaginated<ISneaker> = await pb
     .collection("sneakers")
-    .getList(+page, 2, {
+    .getList(+page, 20, {
       filter: filter || "",
     });
 
-  console.log(paginatedSneakers);
-
-  return json({ paginatedSneakers });
+  return { paginatedSneakers };
 };

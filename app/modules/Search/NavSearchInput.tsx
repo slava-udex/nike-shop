@@ -12,7 +12,7 @@ export const NavSearchInput = () => {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     const formattedQuery = formatQuery(searchQuery);
     event.preventDefault();
-    navigate(`/sneakers/search?q=${formattedQuery}`);
+    navigate(`/products/search?q=${formattedQuery}`);
   };
 
   useEffect(() => {

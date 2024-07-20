@@ -1,10 +1,9 @@
 import React from "react";
-import { ISneaker } from "~/shared/interfaces";
-import { SneakerCard } from "../Sneaker";
-import { SneakersCarousel } from "./SneakersCarousel";
+import { IProduct } from "~/shared/interfaces";
+import { ProductsCarousel } from "./ProductsCarousel";
 
 interface Props {
-  recommendations: ISneaker[];
+  recommendations: IProduct[];
 }
 
 export const Recommendations: React.FC<Props> = ({ recommendations }) => {
@@ -15,7 +14,7 @@ export const Recommendations: React.FC<Props> = ({ recommendations }) => {
   return (
     <div className="flex flex-col max-w-[1200px] px-4">
       <h4 className="font-medium text-xl">You might also like</h4>
-      <SneakersCarousel sneakers={recommendations} />
+      <ProductsCarousel products={recommendations} />
     </div>
   );
 };

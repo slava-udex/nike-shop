@@ -1,10 +1,10 @@
 export type { ILink } from "./link";
 export type { IList } from "./list";
-export type { ISneaker } from "./sneaker";
+export type { IProduct } from "./product";
 export type { ISizeChart } from "./sizeChart";
 export type { IUser } from "./user";
 export type { ICart } from "./cart";
 export type { IWish } from "./wish";
 export type { ICollection } from "./collection";
 export type { IPaginated } from "./paginated";
-export type { ISneakersResponse } from "./sneakersResponse";
+export type { IProductsResponse } from "./productResponse";

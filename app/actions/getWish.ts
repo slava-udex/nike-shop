@@ -1,5 +1,5 @@
 import { pb } from "~/lib/pb";
-import { ICollection, ISneaker, IUser, IWish } from "~/shared/interfaces";
+import { ICollection, IProduct, IUser, IWish } from "~/shared/interfaces";
 
 export const getWish = async (user: IUser): Promise<ICollection[]> => {
   const favourites: IWish[] = await pb.collection("favourites").getFullList({
@@ -10,10 +10,10 @@ export const getWish = async (user: IUser): Promise<ICollection[]> => {
 
   const wish = await Promise.all(
     favourites.map(async (favourite) => {
-      const sneaker: ISneaker = await pb
-        .collection("sneakers")
-        .getOne(favourite.sneakerId);
-      return { id: favourite.id, sneaker, size: favourite.size };
+      const product: IProduct = await pb
+        .collection("products")
+        .getOne(favourite.productId);
+      return { id: favourite.id, product, size: favourite.size };
     })
   );
 

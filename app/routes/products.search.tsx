@@ -7,10 +7,10 @@ import {
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { getRecommendationsByCategory } from "~/actions";
-import { getPaginatedSneakers } from "~/lib/getPaginatedSneakers";
-import { PaginatedSneakerGrid } from "~/modules";
+import { getPaginatedProducts } from "~/lib/getPaginatedProducts";
+import { PaginatedProductGrid } from "~/modules";
 import { Recommendations } from "~/modules/Cart";
-import { ISneaker, ISneakersResponse } from "~/shared/interfaces";
+import { IProduct, IProductsResponse } from "~/shared/interfaces";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { searchParams } = new URL(request.url);
@@ -23,28 +23,28 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const filter = `title~"${query}" || category~"${query}"`;
 
-  const { paginatedSneakers } = await getPaginatedSneakers(request.url, filter);
+  const { paginatedProducts } = await getPaginatedProducts(request.url, filter);
 
   // TODO: Get recommendations by the most popular
   const recommendations = await getRecommendationsByCategory("Men's Shoes");
 
-  return { paginatedSneakers, recommendations };
+  return { paginatedProducts, recommendations };
 };
 
-export default function SneakersSearch() {
-  const { paginatedSneakers: initialSneakers, recommendations } = useLoaderData<
-    ISneakersResponse & { recommendations: ISneaker[] }
+export default function productsSearch() {
+  const { paginatedProducts: initialProducts, recommendations } = useLoaderData<
+    IProductsResponse & { recommendations: IProduct[] }
   >();
-  const [sneakers, setSneakers] = useState<ISneaker[]>(initialSneakers.items);
-  const fetcher = useFetcher<ISneakersResponse>();
+  const [products, setproducts] = useState<IProduct[]>(initialProducts.items);
+  const fetcher = useFetcher<IProductsResponse>();
   const searchParams = useSearchParams()[0];
   const query = searchParams.get("q") || "";
 
   useEffect(() => {
-    setSneakers(initialSneakers.items);
-  }, [initialSneakers]);
+    setproducts(initialProducts.items);
+  }, [initialProducts]);
 
-  if (sneakers.length === 0) {
+  if (products.length === 0) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center py-12 gap-36">
         <div className="space-y-4">
@@ -63,12 +63,12 @@ export default function SneakersSearch() {
   return (
     <div>
       <h1 className="text-3xl font-bold p-4">Results for "{query}"</h1>
-      <PaginatedSneakerGrid
-        initialSneakers={initialSneakers}
-        sneakers={sneakers}
-        setSneakers={setSneakers}
+      <PaginatedProductGrid
+        initialProducts={initialProducts}
+        products={products}
+        setProducts={setproducts}
         fetcher={fetcher}
-        route={`sneakers/search&q=${query}`}
+        route={`products/search&q=${query}`}
       />
     </div>
   );

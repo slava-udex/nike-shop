@@ -15,7 +15,6 @@ interface Props {
 }
 
 export const Errors: FC<Props> = ({ errors }) => {
-  console.log(Object.keys(errors));
   return (
     <AnimatePresence>
       {Object.keys(errors).length > 0 && (

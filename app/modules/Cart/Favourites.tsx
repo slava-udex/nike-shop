@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ICollection, ISneaker } from "~/shared/interfaces";
+import { ICollection } from "~/shared/interfaces";
 import { CartCard } from "./CartCard";
 
 interface Props {
@@ -22,8 +22,8 @@ export const Favourites: FC<Props> = ({ wishlist }) => {
       <div className="grid grid-cols-2">
         {wishlist.map((favourite) => (
           <CartCard
-            key={favourite.sneaker.id}
-            sneaker={favourite.sneaker}
+            key={favourite.product.id}
+            product={favourite.product}
             size={favourite.size}
             recordId={favourite.id}
             isWishItem

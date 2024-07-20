@@ -5,7 +5,7 @@ interface Props {
   tips: string[];
 }
 
-export const SneakerSizeTips: React.FC<Props> = ({ tips, title }) => {
+export const ProductSizeTips: React.FC<Props> = ({ tips, title }) => {
   return (
     <div className="space-y-4">
       <h4 className="text-xl font-medium">{title}</h4>

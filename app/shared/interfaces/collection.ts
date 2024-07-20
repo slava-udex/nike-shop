@@ -1,7 +1,7 @@
-import { ISneaker } from "./sneaker";
+import { IProduct } from "./";
 
 export interface ICollection {
   id: string;
-  sneaker: ISneaker;
+  product: IProduct;
   size: number;
 }

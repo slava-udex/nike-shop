@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Bag: FC<Props> = ({ cart }) => {
-  const totalPrice = cart.reduce((acc, cur) => acc + cur.sneaker.price, 0);
+  const totalPrice = cart.reduce((acc, cur) => acc + cur.product.price, 0);
 
   if (cart.length === 0) {
     return (
@@ -29,8 +29,8 @@ export const Bag: FC<Props> = ({ cart }) => {
         <div className="space-y-4">
           {cart.map((record) => (
             <CartCard
-              key={record.sneaker.id}
-              sneaker={record.sneaker}
+              key={record.product.id}
+              product={record.product}
               size={record.size}
               recordId={record.id}
             />

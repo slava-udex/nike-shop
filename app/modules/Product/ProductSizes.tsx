@@ -1,22 +1,22 @@
 import { Link } from "@remix-run/react";
 import React from "react";
 import { cn, fromStringToArray, getSizeLink } from "~/lib/utils";
-import { ISneaker } from "~/shared/interfaces";
+import { IProduct } from "~/shared/interfaces";
 
 interface Props {
   selectedSize: string | null;
   setSelectedSize: (size: string) => void;
-  sneaker: ISneaker;
+  product: IProduct;
 }
 
-export const SneakerSizes: React.FC<Props> = ({
-  sneaker,
+export const ProductSizes: React.FC<Props> = ({
+  product,
   selectedSize,
   setSelectedSize,
 }) => {
-  const sizes = fromStringToArray(sneaker.sizes);
+  const sizes = fromStringToArray(product.sizes);
   const onSizeClick = (size: string) => {
-    if (!sneaker.sizesAvalaible.includes(size)) {
+    if (!product.sizesAvalaible.includes(size)) {
       return;
     }
     setSelectedSize(size);
@@ -26,7 +26,7 @@ export const SneakerSizes: React.FC<Props> = ({
     <>
       <div className="flex justify-between">
         <p className="font-medium">Select Size</p>
-        <Link to={getSizeLink(sneaker.category)} className="text-[#757575]">
+        <Link to={getSizeLink(product.category)} className="text-[#757575]">
           Size Guide
         </Link>
       </div>
@@ -36,7 +36,7 @@ export const SneakerSizes: React.FC<Props> = ({
             key={size}
             className={cn(
               "rounded-md p-3 text-md border border-[#E5E5E5]  transition-colors",
-              sneaker.sizesAvalaible.includes(size)
+              product.sizesAvalaible.includes(size)
                 ? "cursor-pointer hover:border-black"
                 : "text-[#dddddd] hover:cursor-not-allowed",
               selectedSize === size ? "border-black" : "border-[#E5E5E5]"

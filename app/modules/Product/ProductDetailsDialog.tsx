@@ -1,5 +1,5 @@
 import React from "react";
-import { ISneaker } from "~/shared/interfaces/sneaker";
+import { IProduct } from "~/shared/interfaces/product";
 import { Dialog } from "~/shared/ui/";
 import {
   DialogContent,
@@ -8,13 +8,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/shared/ui/dialog";
-import { SneakerBenefitsList } from "./";
+import { ProductBenefitsList } from ".";
 
 interface Props {
-  sneaker: ISneaker;
+  product: IProduct;
 }
 
-export const SneakerDetailsDialog: React.FC<Props> = ({ sneaker }) => {
+export const ProductDetailsDialog: React.FC<Props> = ({ product }) => {
   return (
     <Dialog>
       <DialogTrigger>
@@ -26,22 +26,22 @@ export const SneakerDetailsDialog: React.FC<Props> = ({ sneaker }) => {
         <DialogHeader>
           <div className="flex items-center gap-4 ">
             <img
-              src={`http://ivs-nikestore-pb.apps.aiweb.cloud/api/files/${sneaker.collectionId}/${sneaker.id}/${sneaker.thumbnail}`}
-              alt={`${sneaker.title}`}
+              src={`http://ivs-nikestore-pb.apps.aiweb.cloud/api/files/${product.collectionId}/${product.id}/${product.thumbnail}`}
+              alt={`${product.title}`}
               className="w-20 h-20 object-cover"
             />
             <div className="flex flex-col gap-2">
-              <DialogTitle className="font-medium">{sneaker.title}</DialogTitle>
-              <DialogDescription>${sneaker.price}</DialogDescription>
+              <DialogTitle className="font-medium">{product.title}</DialogTitle>
+              <DialogDescription>${product.price}</DialogDescription>
             </div>
           </div>
         </DialogHeader>
         <div className="flex flex-col gap-8 px-2">
-          <p>{sneaker.description}</p>
-          <SneakerBenefitsList title="Benefits" details={sneaker.benefits} />
-          <SneakerBenefitsList
+          <p>{product.description}</p>
+          <ProductBenefitsList title="Benefits" details={product.benefits} />
+          <ProductBenefitsList
             title="Product Details"
-            details={sneaker.productDetails}
+            details={product.productDetails}
           />
         </div>
       </DialogContent>

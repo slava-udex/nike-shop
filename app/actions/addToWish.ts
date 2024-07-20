@@ -4,7 +4,7 @@ import { IUser } from "~/shared/interfaces";
 import { IWish } from "~/shared/interfaces/wish";
 
 export const addToWish = async (
-  sneakerId: string,
+  productId: string,
   size: number,
   user: IUser
 ) => {
@@ -15,7 +15,7 @@ export const addToWish = async (
     });
 
   try {
-    const query = `userId="${user.id}" && sneakerId="${sneakerId}"`;
+    const query = `userId="${user.id}" && productId="${productId}"`;
     // Search for an existing wishlist
     const existingWish: IWish[] = await pb
       .collection("favourites")
@@ -30,16 +30,16 @@ export const addToWish = async (
         });
         return json({
           title: "OK!",
-          description: "This sneaker is already in wishlist. Size updated.",
+          description: "This product is already in wishlist. Size updated.",
         });
       }
       return json({
         title: "OK!",
-        description: "This sneaker is already in wishlist.",
+        description: "This product is already in wishlist.",
       });
     }
     await pb.collection("favourites").create({
-      sneakerId,
+      productId,
       userId: user.id,
       size,
     });
@@ -48,5 +48,5 @@ export const addToWish = async (
     return json({ title: "Oops!", description: "Something went wrong" });
   }
 
-  return json({ title: "Success!", description: "Sneaker added to wishlist" });
+  return json({ title: "Success!", description: "Product added to wishlist" });
 };

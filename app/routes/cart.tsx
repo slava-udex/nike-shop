@@ -13,7 +13,7 @@ import { getRecommendations } from "~/actions/getRecommendations";
 import { pb } from "~/lib/pb";
 import { toast } from "~/lib/use-toast";
 import { Bag, Favourites, Recommendations } from "~/modules/Cart";
-import { ICollection, ISneaker, IUser } from "~/shared/interfaces";
+import { ICollection, IProduct, IUser } from "~/shared/interfaces";
 
 export const loader = async () => {
   const user = pb.authStore.model;
@@ -22,8 +22,8 @@ export const loader = async () => {
   const cart = await getCart(user as IUser);
   const wish = await getWish(user as IUser);
 
-  const cartProducts = cart.map((item) => item.sneaker);
-  const wishProducts = wish.map((item) => item.sneaker);
+  const cartProducts = cart.map((item) => item.product);
+  const wishProducts = wish.map((item) => item.product);
 
   const recommendations = await getRecommendations(
     cartProducts.concat(wishProducts)
@@ -36,7 +36,7 @@ export default function Cart() {
   const { cart, wish, recommendations } = useLoaderData<{
     cart: ICollection[];
     wish: ICollection[];
-    recommendations: ISneaker[];
+    recommendations: IProduct[];
   }>();
   const action = useActionData<{ title: string; description: string }>();
 
@@ -68,18 +68,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const actionType = formData.get("_action");
   const recordId = formData.get("recordId");
-  const sneakerId = formData.get("sneakerId");
+  const productId = formData.get("productId");
   const size = formData.get("size");
   const user = pb.authStore.model;
 
-  console.log({ actionType });
-
   if (actionType === "addToWish") {
-    return addToWish(String(sneakerId), Number(size), user as IUser);
+    return addToWish(String(productId), Number(size), user as IUser);
   }
 
   if (actionType === "addToCart") {
-    return addToCart(String(sneakerId), Number(size), user as IUser);
+    return addToCart(String(productId), Number(size), user as IUser);
   }
 
   if (actionType === "deleteFromWish") {

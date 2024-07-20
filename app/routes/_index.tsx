@@ -1,11 +1,11 @@
 import { LoaderFunction, type MetaFunction } from "@remix-run/node";
 import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import { getPaginatedSneakers } from "~/lib/getPaginatedSneakers";
+import { getPaginatedProducts } from "~/lib/getPaginatedProducts";
 import { useToast } from "~/lib/use-toast";
-import { PaginatedSneakerGrid } from "~/modules/Sneaker";
-import { ISneakersResponse } from "~/shared/interfaces";
-import { ISneaker } from "~/shared/interfaces/sneaker";
+import { PaginatedProductGrid } from "~/modules/Product";
+import { IProductsResponse } from "~/shared/interfaces";
+import { IProduct } from "~/shared/interfaces";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,14 +15,14 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  return getPaginatedSneakers(request.url);
+  return getPaginatedProducts(request.url);
 };
 
 export default function Index() {
-  const { paginatedSneakers: initialSneakers } =
-    useLoaderData<ISneakersResponse>();
-  const [sneakers, setSneakers] = useState<ISneaker[]>(initialSneakers.items);
-  const fetcher = useFetcher<ISneakersResponse>();
+  const { paginatedProducts: initialProducts } =
+    useLoaderData<IProductsResponse>();
+  const [products, setProducts] = useState<IProduct[]>(initialProducts.items);
+  const fetcher = useFetcher<IProductsResponse>();
 
   const { toast } = useToast();
   const params = useSearchParams()[0];
@@ -38,10 +38,10 @@ export default function Index() {
   }, [isSuccess, toast]);
 
   return (
-    <PaginatedSneakerGrid
-      initialSneakers={initialSneakers}
-      sneakers={sneakers}
-      setSneakers={setSneakers}
+    <PaginatedProductGrid
+      initialProducts={initialProducts}
+      products={products}
+      setProducts={setProducts}
       fetcher={fetcher}
     />
   );

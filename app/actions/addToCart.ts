@@ -3,7 +3,7 @@ import { pb } from "~/lib/pb";
 import { ICart, IUser } from "~/shared/interfaces";
 
 export const addToCart = async (
-  sneakerId: string,
+  productId: string,
   size: number,
   user: IUser
 ) => {
@@ -14,7 +14,7 @@ export const addToCart = async (
     });
 
   try {
-    const query = `userId="${user.id}" && sneakerId="${sneakerId}"`;
+    const query = `userId="${user.id}" && productId="${productId}"`;
     // Search for an existing cart
     const existingCart: ICart[] = await pb.collection("cart").getFullList({
       filter: query,
@@ -27,16 +27,16 @@ export const addToCart = async (
         });
         return json({
           title: "OK!",
-          description: "This sneaker is already in cart. Size updated.",
+          description: "This product is already in cart. Size updated.",
         });
       }
       return json({
         title: "OK!",
-        description: "This sneaker is already in cart.",
+        description: "This product is already in cart.",
       });
     }
     await pb.collection("cart").create({
-      sneakerId,
+      productId,
       userId: user.id,
       size,
     });
@@ -46,5 +46,5 @@ export const addToCart = async (
   }
 
   // Add cart drawer
-  return json({ title: "Success!", description: "Sneaker added to cart" });
+  return json({ title: "Success!", description: "Product added to cart" });
 };

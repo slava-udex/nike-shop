@@ -5,7 +5,7 @@ interface Props {
   sizeChart: ISizeChart;
 }
 
-export const SneakerSizeTable: React.FC<Props> = ({ sizeChart }) => {
+export const ProductSizeTable: React.FC<Props> = ({ sizeChart }) => {
   const names = Object.keys(sizeChart);
 
   return (

@@ -1,11 +1,11 @@
 import { getMostPopularCategory } from "~/lib/getMostPopularCategory";
 import { pb } from "~/lib/pb";
-import { ISneaker } from "~/shared/interfaces";
+import { IProduct } from "~/shared/interfaces";
 
 export const getRecommendations = async (
-  sneakers: ISneaker[]
-): Promise<ISneaker[]> => {
-  const mostPopularCategory = getMostPopularCategory(sneakers);
+  products: IProduct[]
+): Promise<IProduct[]> => {
+  const mostPopularCategory = getMostPopularCategory(products);
   console.log(mostPopularCategory);
 
   if (!mostPopularCategory) {
@@ -13,13 +13,15 @@ export const getRecommendations = async (
   }
 
   try {
-    const idsToExclude = sneakers.map((sneaker) => sneaker.id);
+    const idsToExclude = products.map((product) => product.id);
 
-    const products: ISneaker[] = await pb.collection("sneakers").getFullList({
-      filter: `category="${mostPopularCategory}"`,
-    });
+    const productsByCategory: IProduct[] = await pb
+      .collection("products")
+      .getFullList({
+        filter: `category="${mostPopularCategory}"`,
+      });
 
-    const filteredProducts = products.filter(
+    const filteredProducts = productsByCategory.filter(
       (product) => !idsToExclude.includes(product.id)
     );
 

@@ -1,15 +1,15 @@
 import { pb } from "~/lib/pb";
-import { IPaginated, ISneaker } from "~/shared/interfaces";
+import { IPaginated, IProduct } from "~/shared/interfaces";
 
 export const getRecommendationsByCategory = async (category: string) => {
   try {
-    const { items: sneakers }: IPaginated<ISneaker> = await pb
-      .collection("sneakers")
+    const { items: products }: IPaginated<IProduct> = await pb
+      .collection("products")
       .getList(1, 8, {
         filter: `category="${category}"`,
       });
 
-    return sneakers;
+    return products;
   } catch (error) {
     return [];
   }

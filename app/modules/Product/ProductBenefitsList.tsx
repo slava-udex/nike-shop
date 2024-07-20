@@ -6,7 +6,7 @@ interface Props {
   details: string;
 }
 
-export const SneakerBenefitsList: React.FC<Props> = ({ title, details }) => {
+export const ProductBenefitsList: React.FC<Props> = ({ title, details }) => {
   const detailsArr = fromStringToArray(details);
 
   return (

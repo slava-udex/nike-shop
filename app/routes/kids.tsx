@@ -1,25 +1,25 @@
 import { LoaderFunction } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import { getPaginatedSneakers } from "~/lib/getPaginatedSneakers";
-import { PaginatedSneakerGrid } from "~/modules/Sneaker/";
-import { ISneaker, ISneakersResponse } from "~/shared/interfaces";
+import { getPaginatedProducts } from "~/lib/getPaginatedProducts";
+import { PaginatedProductGrid } from "~/modules/Product";
+import { IProduct, IProductsResponse } from "~/shared/interfaces";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  return getPaginatedSneakers(request.url, `category~"Kids"`);
+  return getPaginatedProducts(request.url, `category~"Kids"`);
 };
 
-export default function KidsSneakers() {
-  const { paginatedSneakers: initialSneakers } =
-    useLoaderData<ISneakersResponse>();
-  const [sneakers, setSneakers] = useState<ISneaker[]>(initialSneakers.items);
-  const fetcher = useFetcher<ISneakersResponse>();
+export default function KidsProducts() {
+  const { paginatedProducts: initialProducts } =
+    useLoaderData<IProductsResponse>();
+  const [products, setProducts] = useState<IProduct[]>(initialProducts.items);
+  const fetcher = useFetcher<IProductsResponse>();
 
   return (
-    <PaginatedSneakerGrid
-      initialSneakers={initialSneakers}
-      sneakers={sneakers}
-      setSneakers={setSneakers}
+    <PaginatedProductGrid
+      initialProducts={initialProducts}
+      products={products}
+      setProducts={setProducts}
       fetcher={fetcher}
       route="kids"
     />

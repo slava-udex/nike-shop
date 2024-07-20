@@ -1,6 +1,6 @@
-import { ISneaker } from "~/shared/interfaces";
+import { IProduct } from "~/shared/interfaces";
 
-export function getMostPopularCategory(products: ISneaker[]): string | null {
+export function getMostPopularCategory(products: IProduct[]): string | null {
   const categoryCount: { [key: string]: number } = {};
 
   products.forEach((item) => {

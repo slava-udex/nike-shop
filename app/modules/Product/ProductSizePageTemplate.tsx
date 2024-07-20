@@ -1,7 +1,7 @@
 import React from "react";
 import { ISizeChart } from "~/shared/interfaces";
-import { SneakerSizeTable } from "./SneakerSizeTable";
-import { SneakerSizeTips } from "./SneakerSizeTips";
+import { ProductSizeTable } from "./ProductSizeTable";
+import { ProductSizeTips } from "./ProductSizeTips";
 
 interface Props {
   title: string;
@@ -14,7 +14,7 @@ interface Props {
   additionalInfo?: React.ReactNode;
 }
 
-export const SneakerSizePageTemplate: React.FC<Props> = ({
+export const ProductSizePageTemplate: React.FC<Props> = ({
   title,
   description,
   tableChart,
@@ -34,12 +34,12 @@ export const SneakerSizePageTemplate: React.FC<Props> = ({
       <div className="flex flex-col gap-16">
         <div className="space-y-6">
           <p className="text-3xl">{chartTitle || "Size Chart"}</p>
-          <SneakerSizeTable sizeChart={tableChart} />
+          <ProductSizeTable sizeChart={tableChart} />
         </div>
         {/* Children for additional tables */}
         {children}
       </div>
-      <SneakerSizeTips title={tipsTitle} tips={tips} />
+      <ProductSizeTips title={tipsTitle} tips={tips} />
       {additionalInfo}
     </div>
   );

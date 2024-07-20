@@ -1,22 +1,22 @@
 import React from "react";
 import { fromStringToArray } from "~/lib/utils";
-import { ISneaker } from "~/shared/interfaces/sneaker";
+import { IProduct } from "~/shared/interfaces/product";
 
 interface Props {
-  sneaker: ISneaker;
+  product: IProduct;
 }
 
-export const SneakerShowcase: React.FC<Props> = ({ sneaker }) => {
-  const showcaseComments = fromStringToArray(sneaker.showcaseComments);
+export const ProductShowcase: React.FC<Props> = ({ product }) => {
+  const showcaseComments = fromStringToArray(product.showcaseComments);
   return (
     <div className="flex flex-col gap-36 items-center">
-      {sneaker.showcase.map((image, index) => (
+      {product.showcase.map((image, index) => (
         <div className="space-y-14" key={image}>
           <p className="text-center text-lg max-w-[582px] mx-auto">
             {showcaseComments[index]}
           </p>
           <img
-            src={`http://ivs-nikestore-pb.apps.aiweb.cloud/api/files/${sneaker.collectionId}/${sneaker.id}/${image}`}
+            src={`http://ivs-nikestore-pb.apps.aiweb.cloud/api/files/${product.collectionId}/${product.id}/${image}`}
             className="w-full object-cover"
           />
         </div>

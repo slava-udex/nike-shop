@@ -22,14 +22,14 @@ export const suggestions = [
 export const MobileSearchInput = () => {
   const searchParams = useSearchParams()[0];
   const query = searchParams.get("q") || "";
-  const searchBaseUrl = "/sneakers/search?q=";
+  const searchBaseUrl = "/products/search?q=";
 
   const [searchQuery, setSearchQuery] = useState(query);
   const navigate = useNavigate();
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     const formattedQuery = formatQuery(searchQuery);
     event.preventDefault();
-    navigate(`/sneakers/search?q=${formattedQuery}`);
+    navigate(`/products/search?q=${formattedQuery}`);
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-export interface ISneaker {
+export interface IProduct {
   id: string;
   collectionId: string;
   title: string;

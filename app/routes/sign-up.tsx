@@ -2,12 +2,10 @@ import { ActionFunctionArgs } from "@remix-run/node";
 import { json, Link, redirect } from "@remix-run/react";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import nike from "~/assets/images/nike.png";
-import { Button, Heading, Input } from "~/shared/ui";
-// import { pb } from "~/lib/pb";
+import { pb } from "~/lib/pb";
 import { FormData, resolver } from "~/lib/schemas/sign-up";
 import { AuthForm, Errors } from "~/modules";
-import PocketBase from "pocketbase";
-import { pb } from "~/lib/pb";
+import { Button, Heading, Input } from "~/shared/ui";
 
 export default function SignUp() {
   const {

@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "~/shared/ui/accordion";
 
-export const SneakerDetailsAccordion = () => {
+export const ProductDetailsAccordion = () => {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="shipping">

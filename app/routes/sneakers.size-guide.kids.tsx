@@ -1,7 +1,7 @@
 import {
+  ProductSizePageTemplate,
+  ProductSizeTable,
   SneakerKidsMeasure,
-  SneakerSizePageTemplate,
-  SneakerSizeTable,
 } from "~/modules";
 import {
   babiesToddlersFootSizeChart,
@@ -11,7 +11,7 @@ import {
 
 export default function KidsSizeGuide() {
   return (
-    <SneakerSizePageTemplate
+    <ProductSizePageTemplate
       title="Kids' Shoes"
       description="Find your correct size in the charts below."
       chartTitle="Big Kids (1Y - 7Y)"
@@ -24,12 +24,12 @@ export default function KidsSizeGuide() {
     >
       <div className="space-y-6">
         <p className="text-3xl">Little Kids (8C - 3Y)</p>
-        <SneakerSizeTable sizeChart={littleKidsSizeChart} />
+        <ProductSizeTable sizeChart={littleKidsSizeChart} />
       </div>
       <div className="space-y-6">
         <p className="text-3xl">Babies & Toddlers (1C - 10C)</p>
-        <SneakerSizeTable sizeChart={babiesToddlersFootSizeChart} />
+        <ProductSizeTable sizeChart={babiesToddlersFootSizeChart} />
       </div>
-    </SneakerSizePageTemplate>
+    </ProductSizePageTemplate>
   );
 }

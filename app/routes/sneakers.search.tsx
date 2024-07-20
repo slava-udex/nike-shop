@@ -14,12 +14,15 @@ import { Recommendations } from "~/modules/Cart";
 import { ISneaker, ISneakersResponse } from "~/shared/interfaces";
 
 export const loader: LoaderFunction = async ({ request }) => {
+  console.log({ url: request.url });
+
   const { searchParams } = new URL(request.url);
+
   const query = searchParams.get("q");
 
-  if (!query) {
-    return redirect("/");
-  }
+  // if (!query) {
+  //   return redirect("/");
+  // }
 
   const filter = `title~"${query}" || category~"${query}"`;
 
@@ -65,7 +68,7 @@ export default function SneakersSearch() {
       sneakers={sneakers}
       setSneakers={setSneakers}
       fetcher={fetcher}
-      route="sneakers/search"
+      route={`sneakers/search&q=${searchParams.get("q")}`}
     />
   );
 }

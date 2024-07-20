@@ -5,7 +5,9 @@ import { Input } from "~/shared/ui";
 
 export const SneakerSearchInput = () => {
   const searchParams = useSearchParams()[0];
-  const [searchQuery, setSearchQuery] = useState("");
+  const query = searchParams.get("q") || "";
+
+  const [searchQuery, setSearchQuery] = useState(query);
   const navigate = useNavigate();
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     const formattedQuery = formatQuery(searchQuery);
@@ -14,14 +16,12 @@ export const SneakerSearchInput = () => {
   };
 
   useEffect(() => {
-    const query = formatQuery(searchParams.get("q") || "");
-    setSearchQuery(query);
-  }, [searchParams]);
+    setSearchQuery(formatQuery(query));
+  }, [query]);
 
   return (
     <form onSubmit={onSubmit}>
       <Input
-        defaultValue={searchParams.get("q") || ""}
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}
         placeholder="Search.."

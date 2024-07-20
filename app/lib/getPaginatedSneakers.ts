@@ -1,6 +1,5 @@
 import { IPaginated, ISneaker } from "~/shared/interfaces";
 import { pb } from "./pb";
-import { json } from "@remix-run/react";
 
 export const getPaginatedSneakers = async (
   requestUrl: string,

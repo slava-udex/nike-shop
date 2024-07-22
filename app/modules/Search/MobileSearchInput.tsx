@@ -54,6 +54,7 @@ export const MobileSearchInput = () => {
         {suggestions.map((suggestion) => (
           <Link
             className="text-zinc-500 underline-offset-4 hover:text-black hover:underline"
+            key={suggestion.href}
             to={`${searchBaseUrl}${suggestion.href}`}
           >
             {suggestion.label}

@@ -8,9 +8,10 @@ import {
 import { useEffect, useState } from "react";
 import { getRecommendationsByCategory } from "~/actions";
 import { getPaginatedProducts } from "~/lib/getPaginatedProducts";
+import { pb } from "~/lib/pb";
 import { PaginatedProductGrid } from "~/modules";
 import { Recommendations } from "~/modules/Cart";
-import { IProduct, IProductsResponse } from "~/shared/interfaces";
+import { IProduct, TProductsResponse } from "~/shared/interfaces";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { searchParams } = new URL(request.url);
@@ -23,25 +24,35 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const filter = `title~"${query}" || category~"${query}"`;
 
-  const { paginatedProducts } = await getPaginatedProducts(request.url, filter);
+  const paginatedProducts = await getPaginatedProducts(request.url, filter);
+
+  const allProducts = await pb.collection("products").getFullList({
+    filter,
+  });
 
   // TODO: Get recommendations by the most popular
   const recommendations = await getRecommendationsByCategory("Men's Shoes");
 
-  return { paginatedProducts, recommendations };
+  return { paginatedProducts, recommendations, allProducts };
 };
 
 export default function productsSearch() {
-  const { paginatedProducts: initialProducts, recommendations } = useLoaderData<
-    IProductsResponse & { recommendations: IProduct[] }
-  >();
-  const [products, setproducts] = useState<IProduct[]>(initialProducts.items);
-  const fetcher = useFetcher<IProductsResponse>();
+  const {
+    paginatedProducts: initialProducts,
+    recommendations,
+    allProducts,
+  } = useLoaderData<{
+    paginatedProducts: TProductsResponse;
+    recommendations: IProduct[];
+    allProducts: IProduct[];
+  }>();
+  const [products, setProducts] = useState<IProduct[]>(initialProducts.items);
+  const fetcher = useFetcher<{ paginatedProducts: TProductsResponse }>();
   const searchParams = useSearchParams()[0];
   const query = searchParams.get("q") || "";
 
   useEffect(() => {
-    setproducts(initialProducts.items);
+    setProducts(initialProducts.items);
   }, [initialProducts]);
 
   if (products.length === 0) {
@@ -61,14 +72,18 @@ export default function productsSearch() {
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold p-4">Results for "{query}"</h1>
+    <div className="p-4">
+      <h1 className="text-3xl font-bold p-4 text-center">
+        Results for "{query}"
+      </h1>
       <PaginatedProductGrid
         initialProducts={initialProducts}
+        allProducts={allProducts}
         products={products}
-        setProducts={setproducts}
+        setProducts={setProducts}
         fetcher={fetcher}
         route={`products/search&q=${query}`}
+        isPadding={false}
       />
     </div>
   );

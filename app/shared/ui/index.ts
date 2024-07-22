@@ -1,11 +1,15 @@
-export { Button } from "./button";
-export { CheckBox } from "./checkbox";
-export { Input } from "./input";
-export { Heading } from "./heading";
-export * from "./sheet";
-export * from "./accordion";
-export * from "./carousel";
-export * from "./dialog";
-export * from "./table";
-export * from "./toaster";
-export * from "./product-grid";
+// created from 'create-ts-index'
+
+export * from './accordion';
+export * from './button';
+export * from './carousel';
+export * from './checkbox';
+export * from './dialog';
+export * from './heading';
+export * from './infinite-scroller';
+export * from './input';
+export * from './product-grid';
+export * from './sheet';
+export * from './table';
+export * from './toast';
+export * from './toaster';

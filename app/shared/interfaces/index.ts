@@ -7,4 +7,4 @@ export type { ICart } from "./cart";
 export type { IWish } from "./wish";
 export type { ICollection } from "./collection";
 export type { IPaginated } from "./paginated";
-export type { IProductsResponse } from "./productResponse";
+export type { TProductsResponse } from "./productResponse";

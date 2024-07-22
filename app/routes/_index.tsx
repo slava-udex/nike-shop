@@ -2,10 +2,11 @@ import { LoaderFunction, type MetaFunction } from "@remix-run/node";
 import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import { getPaginatedProducts } from "~/lib/getPaginatedProducts";
+import { getQueryFromSearchParams } from "~/lib/getQueryFromSearchParams";
+import { pb } from "~/lib/pb";
 import { useToast } from "~/lib/use-toast";
 import { PaginatedProductGrid } from "~/modules/Product";
-import { IProductsResponse } from "~/shared/interfaces";
-import { IProduct } from "~/shared/interfaces";
+import { IProduct, TProductsResponse } from "~/shared/interfaces";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,18 +16,28 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  return getPaginatedProducts(request.url);
+  const paginatedProducts = await getPaginatedProducts(request.url);
+  const allProducts = await pb.collection("products").getFullList();
+  return { paginatedProducts, allProducts };
 };
 
 export default function Index() {
-  const { paginatedProducts: initialProducts } =
-    useLoaderData<IProductsResponse>();
+  const { paginatedProducts: initialProducts, allProducts } = useLoaderData<{
+    paginatedProducts: TProductsResponse;
+    allProducts: IProduct[];
+  }>();
   const [products, setProducts] = useState<IProduct[]>(initialProducts.items);
-  const fetcher = useFetcher<IProductsResponse>();
+  const fetcher = useFetcher<{ paginatedProducts: TProductsResponse }>();
 
   const { toast } = useToast();
-  const params = useSearchParams()[0];
-  const isSuccess = params.get("success");
+  const searchParams = useSearchParams()[0];
+  const isSuccess = searchParams.get("success");
+
+  const query = getQueryFromSearchParams(searchParams).replaceAll(`"`, "");
+
+  useEffect(() => {
+    setProducts(initialProducts.items);
+  }, [initialProducts]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -40,9 +51,11 @@ export default function Index() {
   return (
     <PaginatedProductGrid
       initialProducts={initialProducts}
+      allProducts={allProducts}
       products={products}
       setProducts={setProducts}
       fetcher={fetcher}
+      route={`index&${query}`}
     />
   );
 }

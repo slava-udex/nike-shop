@@ -1,14 +1,38 @@
 import React from "react";
 import { IProduct } from "../interfaces";
 import { ProductCard } from "~/modules";
+import { Link, useLocation } from "@remix-run/react";
 
 interface Props {
   products: IProduct[];
 }
 
 export const ProductsGrid: React.FC<Props> = ({ products }) => {
+  const { pathname } = useLocation();
+  if (products.length === 0) {
+    return (
+      <div className="w-full flex flex-col items-center justify-center gap-48">
+        <iframe
+          className="w-48 h-48 sm:w-64 sm:h-64"
+          src="https://lottie.host/embed/19a3f2d8-f17a-4a48-902a-c6ded06e29ab/KAJGn24suY.json"
+        />
+        <div className="space-y-2">
+          <h2 className="text-center text-4xl sm:text-6xl font-medium">
+            Oops!
+          </h2>
+          <p className="text-center text-2xl sm:text-3xl">
+            We could not found products by this filters. Try{" "}
+            <Link className="underline underline-offset-4" to={pathname}>
+              resetting them
+            </Link>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div className="min-h-screen grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}

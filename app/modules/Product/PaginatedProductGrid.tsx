@@ -1,23 +1,28 @@
 import { FetcherWithComponents } from "@remix-run/react";
 import { SetStateAction, useEffect } from "react";
-import { IPaginated, IProduct, IProductsResponse } from "~/shared/interfaces";
-import { ProductsGrid } from "~/shared/ui";
-import { InfiniteScroller } from "~/shared/ui/infinite-scroller";
+import { cn } from "~/lib/utils";
+import { IProduct, TProductsResponse } from "~/shared/interfaces";
+import { InfiniteScroller, ProductsGrid } from "~/shared/ui";
+import { Filtering } from "../Filtering";
 
 interface Props {
-  initialProducts: IPaginated<IProduct>;
+  initialProducts: TProductsResponse;
   products: IProduct[];
+  allProducts: IProduct[];
   setProducts: React.Dispatch<SetStateAction<IProduct[]>>;
-  fetcher: FetcherWithComponents<IProductsResponse>;
+  fetcher: FetcherWithComponents<{ paginatedProducts: TProductsResponse }>;
   route?: string;
+  isPadding?: boolean;
 }
 
 export const PaginatedProductGrid: React.FC<Props> = ({
   initialProducts,
   products,
+  allProducts,
   setProducts,
   fetcher,
   route = "index",
+  isPadding = true,
 }) => {
   useEffect(() => {
     if (fetcher.state === "loading" || !fetcher.data) {
@@ -39,7 +44,10 @@ export const PaginatedProductGrid: React.FC<Props> = ({
 
   return (
     <InfiniteScroller loadNext={loadNext} loading={fetcher.state === "loading"}>
-      <ProductsGrid products={products} />
+      <div className={cn("flex", isPadding && "p-8")}>
+        <Filtering allProducts={allProducts} />
+        <ProductsGrid products={products} />
+      </div>
     </InfiniteScroller>
   );
 };

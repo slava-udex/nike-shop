@@ -2,6 +2,7 @@ import React from "react";
 import { IProduct } from "../interfaces";
 import { ProductCard } from "~/modules";
 import { Link, useLocation } from "@remix-run/react";
+import { motion } from "framer-motion";
 
 interface Props {
   products: IProduct[];
@@ -11,7 +12,11 @@ export const ProductsGrid: React.FC<Props> = ({ products }) => {
   const { pathname } = useLocation();
   if (products.length === 0) {
     return (
-      <div className="w-full flex flex-col items-center justify-center gap-48">
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full flex flex-col items-center justify-center gap-48"
+      >
         <iframe
           className="w-48 h-48 sm:w-64 sm:h-64"
           src="https://lottie.host/embed/19a3f2d8-f17a-4a48-902a-c6ded06e29ab/KAJGn24suY.json"
@@ -27,7 +32,7 @@ export const ProductsGrid: React.FC<Props> = ({ products }) => {
             </Link>
           </p>
         </div>
-      </div>
+      </motion.div>
     );
   }
 

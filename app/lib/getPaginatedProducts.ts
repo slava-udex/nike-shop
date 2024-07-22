@@ -11,13 +11,22 @@ export const getPaginatedProducts = async (
   const { searchParams } = url;
 
   const queryFromParams = getQueryFromSearchParams(searchParams);
+  console.log({ fromParams: queryFromParams });
 
-  let query = filter || "" + queryFromParams;
+  let query = "";
+  if (filter && queryFromParams) {
+    query = `${filter}&${queryFromParams}`;
+  } else if (filter) {
+    query = filter;
+  } else if (queryFromParams) {
+    query = queryFromParams;
+  }
 
   // Formatting query to make pocketbase read it properly
-  query = query.replaceAll("&", "&&");
+  query = query.replaceAll("&", " && ");
   query = query.replace("min=", "price>=");
   query = query.replace("max=", "price<=");
+  console.log({ query });
 
   const paginatedProducts: IPaginated<IProduct> = await pb
     .collection("products")

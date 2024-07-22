@@ -23,6 +23,10 @@ export const PriceFiltering: React.FC<Props> = ({ products }) => {
     priceRanges.push({ min, max });
   }
 
+  if (priceRanges.length === 0) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col items-start">
       <h2 className="text-lg font-medium">Price Filtering</h2>

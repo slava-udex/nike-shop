@@ -22,9 +22,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     return redirect("/");
   }
 
-  const filter = `title~"${query}" || category~"${query}"`;
+  const filter = query.includes("Men")
+    ? `title~"${query}" && title!~"Women" || category~"${query}"`
+    : `title~"${query}" || category~"${query}"`;
 
   const paginatedProducts = await getPaginatedProducts(request.url, filter);
+  console.log({ paginatedProducts: paginatedProducts.items });
 
   const allProducts = await pb.collection("products").getFullList({
     filter,
